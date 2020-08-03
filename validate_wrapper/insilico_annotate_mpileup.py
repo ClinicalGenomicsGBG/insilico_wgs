@@ -5,7 +5,7 @@ import sys
 import argparse
 
 
-def prepare_insilico_dict(bedfile):
+def prepare_insilico_dict(bedfile, annotationlevel):
     with open(bedfile, "r") as bedfile:
         insilico_list = []
         for annotationrow in bedfile:
@@ -22,42 +22,41 @@ def prepare_insilico_dict(bedfile):
             # NM_XXXXXXXX
             # GENE
             # Discover format
-            annotation_len = len(annotation_name)
-            print(annotation_name)
-            if annotation_len == 1:
-                # Only Genes
+
+            annotationlevels = ["1", "2", "3", "4", "5"]
+            #  (write 1 if only gene format, 2 = gene_exon_1, 3 = gene_transcript_exon_1, 4 = transcript, 5 = transcript_exon_1)
+            if annotationlevel not in annotationlevels:
+                print(f"{annotationlevel} not accepted, exiting")
+                sys.exit()
+
+            if annotationlevel == "1":
+                # Gene
                 annotation_dict["gene"] = annotation_name[0]
-            elif annotation_len == 2:
-                # Only Transcript
-                transcript = '_'.join(annotation_name[0:1])
-                annotation_dict["transcript"] = transcript
-            elif annotation_len == 3:
-                # Gene + Exon
+            elif annotationlevel == "2":
+                # Gene_Exon_1
                 annotation_dict["gene"] = annotation_name[0]
-                exon = '_'.join(annotation_name[1:2])
-                annotation_dict["exon"] = exon
-            elif annotation_len == 4:
-                # Transcript + Exon
-                transcript = '_'.join(annotation_name[0:1])
-                exon = '_'.join(annotation_name[1:2])
-                annotation_dict["transcript"] = transcript
-                annotation_dict["exon"] = exon
-            elif annotation_len == 5:
-                # Gene + Transcript + Exon
+                annotation_dict["exon"] = '_'.join(annotation_name[1:3])
+            elif annotationlevel == "3":
+                # Gene_NM_Transcript_Exon_1
                 annotation_dict["gene"] = annotation_name[0]
-                transcript = '_'.join(annotation_name[0:1])
-                exon = '_'.join(annotation_name[1:2])
-                annotation_dict["transcript"] = transcript
-                annotation_dict["exon"] = exon
+                annotation_dict["transcript"] = '_'.join(annotation_name[1:3])
+                annotation_dict["exon"] = '_'.join(annotation_name[3:5])
+            elif annotationlevel == "4":
+                # NM_Transcript
+                annotation_dict["transcript"] = '_'.join(annotation_name[0:2])
+            elif annotationlevel == "5":
+                # NM_transcript_exon_1
+                annotation_dict["transcript"] = '_'.join(annotation_name[0:2])
+                annotation_dict["exon"] = '_'.join(annotation_name[2:4])
             else:
-                print(f"unexpected annotation format: {annotation_name}")
+                print(f"unexpected annotation format")
                 sys.exit()
             print(annotation_dict)
             insilico_list.append(annotation_dict)
     return insilico_list
 
-def annotate_coverage(coverage, bedfile, output):
-    insilico_list = prepare_insilico_dict(bedfile)
+def annotate_coverage(coverage, bedfile, output, annotationlevel):
+    insilico_list = prepare_insilico_dict(bedfile, annotationlevel)
     if output.endswith('/'):
         output = output[:-1]
     #if not os.path.isdir(output):
@@ -122,9 +121,11 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--coverage', nargs='?', help='(from samtools mpileup -l $BED -Q 1 $BAM | cut -f1,2,4)', required=True)
     parser.add_argument('-b', '--bedfile', nargs='?', help='(annotate coverage-positions with Gene Transcript Exonnumber)', required=True)
     parser.add_argument('-o', '--output', nargs='?', help='(Output location)', required=True)
+    parser.add_argument('-l', '--annotationlevel', nargs='?', help='confusing parameter: (write 1 if only gene format, 2 = gene_exon_1, 3 = gene_transcript_exon_1, 4 = transcript, 5 = transcript_exon_1)', required=True)
     args = parser.parse_args()
     coverage = args.coverage
     bedfile = args.bedfile
     output = args.output
-    annotate_coverage(coverage, bedfile, output)
+    annotationlevel = args.annotationlevel
+    annotate_coverage(coverage, bedfile, output, annotationlevel)
 
