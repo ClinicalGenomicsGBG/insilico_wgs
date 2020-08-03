@@ -10,6 +10,8 @@ fi
 
 BEDFILE=$(echo "$1")
 DEPARTMENT=$(echo "$2")
+LEVEL=$(echo "$3")
+
 if [ "$DEPARTMENT" == "KG" ];
 then
     department=$(echo "klinisk_genetik")
@@ -19,6 +21,15 @@ then
 else
     echo "invalid department, exiting"
     exit
+fi
+if [ -z "$LEVEL" ]; then
+    echo "LEVEL input: $LEVEL is empty. Input, 1,2,3,4 or 5."
+    echo "Refers to annotationtype in bedfile...a bit confusing, sorry" 
+    echo "1 = GENE"
+    echo "2 = GENE_NM_TRANSCRIPT_EXON_X"
+    echo "3 = GENE_EXON_X"
+    echo "4 = NM_TRANSCRIPT"
+    echo "5 = NM_TRANSCRIPT_EXON_X"
 fi
 
 # Bamfiles for validation
@@ -49,7 +60,7 @@ annotate()
 create_dir "$OUTPUT/mpileup/annotated"
 for mpileup in $(find $OUTPUT -name "*.tsv");
 do
-    ./insilico_annotate_mpileup.py -c $mpileup -b $BEDFILE -o $OUTPUT/mpileup/annotated/$(basename $mpileup | cut -d"." -f1)_annotated.tsv
+    ./insilico_annotate_mpileup.py -c $mpileup -b $BEDFILE -l $LEVEL -o $OUTPUT/mpileup/annotated/$(basename $mpileup | cut -d"." -f1)_annotated.tsv
 done
 }
 
