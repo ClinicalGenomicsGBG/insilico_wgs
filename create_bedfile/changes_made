@@ -1,0 +1,12 @@
+sed 's/PARK2/PRKN/g' refseq_20190301_ncbiRefSeq -i
+sed "s/\tSPG20\t/\tSPART\t/g"
+sed "s/\tTMEM2\t/\tCEMIP2\t/g"
+sed "s/\tTMEM55A\t/\tPIP4P2\t/g"
+sed "s/\tTMEM55B\t/\tPIP4P1\t/g"
+sed "s/\tIKBKAP\t/\tELP1\t/g"
+sed "s/\tFAM175A\t/\tABRAXAS1\t/g"
+sed "s/\tFAM134B\t/\tRETREG1\t/g"
+sed "s/\tGIF\t/\tCBLIF\t/g"
+sed "s/\tC9orf172\t/\tAJM1\t/g"
+sed "s/\tHMP19\t/\tNSG2\t/g"
+sed "s/\tFAM127C\t/\tRTL8B\t/g"
