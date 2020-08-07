@@ -120,7 +120,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--coverage', nargs='?', help='(from samtools mpileup -l $BED -Q 1 $BAM | cut -f1,2,4)', required=True)
     parser.add_argument('-b', '--bedfile', nargs='?', help='(annotate coverage-positions with Gene Transcript Exonnumber)', required=True)
-parser.add_argument('-o', '--output', nargs='?', help='(Output location)', required=True)
+    parser.add_argument('-o', '--output', nargs='?', help='(Output location)', required=True)
     parser.add_argument('-l', '--annotationlevel', nargs='?', help='confusing parameter: (write 1 if only gene format, 2 = gene_transcript_exon_1, 3 = gene_exon_1, 4 = transcript, 5 = transcript_exon_1)', required=True)
     args = parser.parse_args()
     coverage = args.coverage
