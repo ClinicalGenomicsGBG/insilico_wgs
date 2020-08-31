@@ -47,7 +47,7 @@ def longest_transcript(transcript_dict_list):
 	longest_transcript = max(length_dict, key=length_dict.get)
 	return longest_transcript
 
-def whole_gene_region(transcript_dict_list):
+def whole_gene_region(transcript_dict_list, expand=None):
 	transcript_starts = []
 	transcript_ends = []
 	example_transcript = transcript_dict_list[0]
@@ -59,9 +59,12 @@ def whole_gene_region(transcript_dict_list):
 		transcript_starts.append(transcript["t_start"])
 		transcript_ends.append(transcript["t_stop"])
 		
-	gene_start = min(transcript_starts)
-	gene_stop = max(transcript_ends)
-	
+	gene_start = int(min(transcript_starts))
+	gene_stop = int(max(transcript_ends))
+	if expand:
+            expand = int(expand)
+            gene_start, gene_stop = expand_regions(expand, gene_start, gene_stop)
+
 	write_dict = create_write_dict(chrom, gene_start, gene_stop, genename, strand)
 	return write_dict		
 
@@ -179,7 +182,7 @@ def refseq_gene(gtf, expand, targetgenes, output, transcripts, longest):
 				write_table = append_transcript_exonregions(genename, refseq_dict[transcript], write_table, expand)
 			# GENE OUTPUT
 			else:
-				write_gene = whole_gene_region(transcript_dict_list)
+				write_gene = whole_gene_region(transcript_dict_list, expand)
 				write_table.append(write_gene)
 
 	else:
