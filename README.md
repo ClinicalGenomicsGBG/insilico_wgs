@@ -9,8 +9,8 @@ You can use this to create bedfiles from a refseq-database or you can do a cover
 (copy pasted from excelsheet, sorry for the mess) 
 
 Vi kan antingen få panelen beskriven till oss som en lista av gener eller en lista av specfika transkript
-Folk på KG tenderar att skicka transkript och är inte så jäkla intresserade av intron-regioner. Får ni transcript så är det bara att skapa en liten textfil med varje transkript per rad, som här t ex:
-/medstore/Development/WGS_validation/in_silico_panels/klinisk_genetik/createbed/small_panels/SMN1_SMN2.v1.0
+Folk på KG tenderar att skicka transkript och är inte så jäkla intresserade av intron-regioner. Får ni transcript så är det bara att skapa en liten textfil med varje transkript per rad, som här t ex i repot:
+/insilico_panels/KG/[ny cool panel]/[nytt coolt panelnamn].txt
 
 ./create_bed.py -r refseq_20190301_ncbiRefSeq -t transcriptlistan -o outputmapp
 OBS: Om man anger transkript namn så får man bara de exoniska regionerna + UTR-regioner för transkriptet. Och KG brukar vilja vara säker på att även splicesites är täckta ordentligt, vilket innebär att man behöver utöka regionerna med 2 baser. Gör då såhär bara:
@@ -33,12 +33,15 @@ https://www.genecards.org
 Och söka efter det angivna gennamnet som inte hittas, och där kolla i listor efter synonymer/deprecated namn och försöka reda ut ifall det namnet vi har är det nyare coola namnet eller om vi sitter på det gamla töntiga namnet. Står det angivna gennamnet som dom skickade högst upp på sidan så är det tyvärr vi som har det töntiga namnet. Då får vi greppa efter synonymerna i vår fil tills att vi får en vettig träff.
 Sen samlar man på sig modet...och lovar sig själv att ta en lång renande dusch i någon snar framtid och kör:
 ./replace_names.sh gammalt_namn nytt_namn
-Det här har gjorts några gånger redan, kolla här:
-/apps/bio/dev_repos/WOPR/in_silico/create_bedfile/changes_made
+Det här har gjorts några gånger redan, kolla här i repot:
+/create_bedfile/changes_made
 Men om man är rädd att man förstört något så finns en backup i samma mapp. 
 
 Historiskt sett, och inte egentligen på ett superorganiserat sätt så har jag haft min outputmapp för att skapa insilico-filer här:
 /medstore/Development/WGS_validation/in_silico_panels/
+
+Men nu tänker jag att vi ska spara bedfilerna i det här repot, eftersom filerna ändå är ganska små och det möjliggör versionshantering! FANTASTISKT JU. 
+
 För att vara lite bättre organiserad har jag sparat alla genlistor/transkriptlistor som har skickats i detta googlesheet. "InSilicopaneler KK" & "InSilicopaneler KG".
 
 # coverage analysis (for in silico panel verification into WGS analysis) 
