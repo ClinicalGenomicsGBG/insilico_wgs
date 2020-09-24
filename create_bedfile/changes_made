@@ -10,3 +10,4 @@ sed "s/\tGIF\t/\tCBLIF\t/g"
 sed "s/\tC9orf172\t/\tAJM1\t/g"
 sed "s/\tHMP19\t/\tNSG2\t/g"
 sed "s/\tFAM127C\t/\tRTL8B\t/g"
+sed 's/NM_006883.2\tY/NM_006883.2IGNORE\tY/g' refseq_20190301_ncbiRefSeq -i
