@@ -2,6 +2,8 @@
 
 You can use this to create bedfiles from a refseq-database or you can do a coverage analysis using mpileup on a collection of validation samples from the novaseq and receive a bunch of output files with various coverage stats. 
 
+# N
+
 # create bedfile
 
 ./create_bed.py
@@ -71,6 +73,10 @@ SOME ADVICE: copy the results to /seqstore/webfolders/admin/insilico_results/ an
 Then copy pate directly from there to column 1 in the excel sheet and in excel click on "Data" menu and choose "Text to columns" using "," as delimeter. 
 
 Finally give the name some cool name, the name of the insilicopanel is a very cool name and also makes sense and then sent to the clinician! They will do amazing things with it. 
+
+# NOTE Before doing the below step wait for notification from your clinical contact 
+
+Before doing the below step which would apply the panel for use in clinical routine analysis you need to wait for confirmation from the clinician that the panel has been approved. They will notify you. You don't have to wait until the official "start-date" (införande) but can add it to routine before AS LONG AS IT HAS BEEN APPROVED. 
 
 # place in silico panel into routine analysis
 
