@@ -1,52 +1,53 @@
-# insilico_wgs
+# insilico\_wgs
 
-You can use this to create bedfiles from a refseq-database or you can do a coverage analysis using mpileup on a collection of validation samples from the novaseq and receive a bunch of output files with various coverage stats. 
+You can use the files in this repo to 
 
-# N
+* create bed files from a refseq-database 
+* do a coverage analysis using mpileup on a collection of validation samples from the novaseq and receive a bunch of output files with various coverage stats.
 
-# create bedfile
 
-./create_bed.py
+### create\_bedfile
 
-(copy pasted from excelsheet, sorry for the mess) 
 
-Vi kan antingen få panelen beskriven till oss som en lista av gener eller en lista av specfika transkript
-Folk på KG tenderar att skicka transkript och är inte så jäkla intresserade av intron-regioner. Får ni transcript så är det bara att skapa en liten textfil med varje transkript per rad, som här t ex i repot:
-/insilico_panels/KG/[ny cool panel]/[nytt coolt panelnamn].txt
+To create a bed file you will need a list of reference sequences (`refseq_20190301_ncbiRefSeq`) and either a list of genes or transcripts. You can create a txt file with your list in `insilico_panels/KG/[new cool panel]/[new cool panelname].txt` and use that. 
+Typically KK uses gene lists and KG uses transcript lists. Here is how to use `create_bed.py` in the two cases:
 
-./create_bed.py -r refseq_20190301_ncbiRefSeq -t transcriptlistan -o outputmapp
-OBS: Om man anger transkript namn så får man bara de exoniska regionerna + UTR-regioner för transkriptet. Och KG brukar vilja vara säker på att även splicesites är täckta ordentligt, vilket innebär att man behöver utöka regionerna med 2 baser. Gör då såhär bara:
-./create_bed.py -r refseq_20190301_ncbiRefSeq -t transcriptlistan -o outputmapp -e 2
 
-Ibland har dom inga specifika transkripts in mind utan man får en genlista, men ibland vill dom samtidigt ändå inte ha täckningsanalys på intronen, eller så vill dom ha ut täckningsinformation på specifika exon (och i båda fallen kan det bli lite bökigt att göra detta baserat på enbart gennamn -- hur numrerar man exonen? ibland har olika transkript i samma gen överlappande exon med olika längder, etc, TLDR: Det är drygt). Lösningen: Plocka ut längsta transkriptet för alla gener
-./create_bed.py -r refseq_20190301_ncbiRefSeq -g genlista -o outputmapp -l yes -e 2
+##### Using a list of transcripts
 
-Är det bara genlista så som KK-folk brukar vilja (citat Emma Samuelsson "Vi vill ha det som vi brukar, rubbet! Tack!") så använder vi inte -l flaggan utan kör bara:
-./create_bed.py -r refseq_20190301_ncbiRefSeq -g genlista -o outputmapp
+The following command will provide exonic as well as UTR regions:
+`./create_bed.py -r refseq_20190301_ncbiRefSeq -t <transcript list> -o <output folder>`
 
-OBS igen: Om transkript eller gener inte finns :O
-Ibland finns inte genen/transkriptet i "databasen" som filen antyder är en nerladdning av refseqGenes från datum 20190301. I transkriptens fall kan det vara så att transkriptet uppdaterats sen nerladdningen (ovanligt), eller i genernas fall att dom har insett att det tidigare namnet var lite töntigt och ville ha ett coolare namn. 
-Iallafall så ploppar dessa ut i en separat fil i outputmappen som heter något med "notfound.txt"
-Vad gör man då?! 
-Ja, greppa i refseq_20190301_ncbiRefSeq efter transkriptet/genen för att lugna sinnet kanske att inte skriptet bara är dum-i-huvet, men det har den faktiskt inte varit än så länge. 
-Är det transkript som saknas skulle jag testa att ta bort versions-namnet i transkriptet, det efter "." alltså. Och kolla om det finns en äldre version eller nyare. Finns det en annan version skulle jag maila och fråga den som bad om panelen ifall det är ok att vi tar den existerande versionen istället, brukar vara OK.
-Är det gener som saknas skulle jag gå in här:
-https://www.genecards.org
-Och söka efter det angivna gennamnet som inte hittas, och där kolla i listor efter synonymer/deprecated namn och försöka reda ut ifall det namnet vi har är det nyare coola namnet eller om vi sitter på det gamla töntiga namnet. Står det angivna gennamnet som dom skickade högst upp på sidan så är det tyvärr vi som har det töntiga namnet. Då får vi greppa efter synonymerna i vår fil tills att vi får en vettig träff.
-Sen samlar man på sig modet...och lovar sig själv att ta en lång renande dusch i någon snar framtid och kör:
-./replace_names.sh gammalt_namn nytt_namn
-Det här har gjorts några gånger redan, kolla här i repot:
-/create_bedfile/changes_made
-Men om man är rädd att man förstört något så finns en backup i samma mapp. 
+**options:**
+`-e 2`  Adds two bases, to make sure splice sites are included as well. This is usually something that KG wants.
 
-Historiskt sett, och inte egentligen på ett superorganiserat sätt så har jag haft min outputmapp för att skapa insilico-filer här:
-/medstore/Development/WGS_validation/in_silico_panels/
+##### Using a list of genes
+The following command will provide introns too.
+`./create_bed.py -r refseq_20190301_ncbiRefSeq -g <gene list> -o <output folder>`
 
-Men nu tänker jag att vi ska spara bedfilerna i det här repot, eftersom filerna ändå är ganska små och det möjliggör versionshantering! FANTASTISKT JU. 
+**options**
+`-l yes`  Extract the longest transcripts for all genes. In case you want to exclude the intron. (Genes can also have overlapping exons of different lengths.)
 
-För att vara lite bättre organiserad har jag sparat alla genlistor/transkriptlistor som har skickats i detta googlesheet. "InSilicopaneler KK" & "InSilicopaneler KG".
+KK usually wants all the information they can get, allowing you to run the command without the `-l`flag.
 
-# coverage analysis (for in silico panel verification into WGS analysis) 
+
+##### The genes/transcripts can’t be found
+Sometimes genes or transcripts can not be found in `refseq_20190301_ncbiRefSeq`. It could be that the transcript has been updated since 2019-03-01 or that the gene name has been changed. If an element of the input list was not found, the script will output a file named notfound.txt. Should the gene/transcript not be present in `refseq_20190301_ncbiRefSeq`there are a few things you can try to solve it:
+
+**Transcripts**
+Try deleting the version part of the transcript name in case there is another version present. If there is, check with the person requesting the panel update if it is okay to use the other version.
+
+**Genes names**
+Check if the gene has another name (e.g. by using [GeneCards database](https://www.genecards.org) ) that might be present in `refseq_20190301_ncbiRefSeq`. To replace a name use the script `replace_names.sh <old name> <new name>`. The changes will be saved in `changes_made`.  
+
+
+### insilico\_panels
+
+The in silico panels used in wopr are also stored here. Every panel folder contains a gene or transcript list as well as a bed file created by create\_bed.py. The lists and bed files of the panels currently used by wopr should also be in `WOPR/references/insilico_panels/`. 
+
+
+### validate\_wrapper
+*coverage analysis (for in silico panel verification into WGS analysis)*
 
 you need to be root to run
 
@@ -74,21 +75,20 @@ Then copy pate directly from there to column 1 in the excel sheet and in excel c
 
 Finally give the name some cool name, the name of the insilicopanel is a very cool name and also makes sense and then sent to the clinician! They will do amazing things with it. 
 
-# NOTE Before doing the below step wait for notification from your clinical contact 
+### NOTE Before doing the below step wait for notification from your clinical contact 
 
 Before doing the below step which would apply the panel for use in clinical routine analysis you need to wait for confirmation from the clinician that the panel has been approved. They will notify you. You don't have to wait until the official "start-date" (införande) but can add it to routine before AS LONG AS IT HAS BEEN APPROVED. 
 
-# place in silico panel into routine analysis
 
-Give the bedfile an appropriate name and place it in the insilico-drectory of the department. Example here:
-/medstore/results/wgs/KG/insilico_panels (for klinisk genetik)
+### Place in silico panel into routine analysis
 
-Then update the json configfile with the new path, which is HERE at the moment, but this will probably change with the new WOPR version:
-/apps/bio/dev_repos/WOPR/insilico_config.json 
+Make sure to update `WOPR/references/insilico_panels/` with the panel changes you have made. You will also need to update `WOPR/configs/insilico_config.json`. 
 
-Level is a bit confusing parameter, it is basically a code for the name-structure in the bedfile. Whether or not it contains gene, transcripts or exons, and in different combinations. 2 levels are in use in routine.
-1 = GeneOnly 
-2 = Gene_Transcript_Exon
+In the `insilico_config.json` file each panel requires a specification of the parameter *level*. It is basically a code for the name-structure in the bedfile. It says whether or not it contains gene, transcripts or exons, and in different combinations. Two levels are currently in use:
+
+1 - GeneOnly 
+
+2 - Gene\_Transcript\_Exon
 
 
 
