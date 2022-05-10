@@ -38,7 +38,7 @@ Try deleting the version part of the transcript name in case there is another ve
 Check if the gene has another name (e.g. by using [GeneCards database](https://www.genecards.org) ) that might be present in `refseq_20190301_ncbiRefSeq`. To replace a name use the script `replace_names.sh <old name> <new name>`. The changes will be saved in `changes_made`.  
 <br />
 
-## insilico\_panels
+## The insilico\_panels folder
 
 The in silico panels used in wopr are also stored here. Every panel folder contains a gene or transcript list as well as a bed file created by create\_bed.py. The lists and bed files of the panels currently used by wopr should also be in `WOPR/references/insilico_panels/`. 
 <br />
