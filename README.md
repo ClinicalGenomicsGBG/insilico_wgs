@@ -4,7 +4,6 @@ You can use the files in this repo to :
 
 * create bed files from a refseq-database 
 * do a coverage analysis using mpileup on a collection of validation samples from the novaseq and receive a bunch of output files with various coverage stats.
-<br />
 
 ## Create a bedfile
 
@@ -46,7 +45,7 @@ The in silico panels used in wopr are also stored here. Every panel folder conta
 
 ## Coverage analysis (for in silico panel verification into WGS analysis)
 
-n order to create a coverage analysis you will need a bed file for the panel in question.
+In order to create a coverage analysis you will need a bed file for the panel in question.
 
 ### How to run
 ```
@@ -61,7 +60,6 @@ cd validate_wrapper/
 ```
 /medstore/Development/WGS_validation/in_silico_panels/${department}/validate/panels/
 ```
-<br />
 
 ## How to get the panel validated
 Some of the results from the coverage analysis are to be sent to the responsible clinician as an excel file. There is a template excel that you should fill in as described below.
@@ -77,9 +75,11 @@ Sheet2 and 3 - `/anybelow/panelname.bed_10x.csv` and `/anybelow/panelname.bed_20
 To format the data in excel, mark the column, click "Data" then "Text to columns" and choose "," as delimiter. Et voilà!
 <br /> 
 
+
 ## Before placing the panel in routine analysis
 A panel has to be approved by the responsible clinician before it can be used in routine analysis.
-<br />
+<br /> 
+
 
 ## Place in silico panel into routine analysis
 
