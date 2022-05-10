@@ -24,11 +24,8 @@ The following command will provide introns too.
 `./create_bed.py -r refseq_20190301_ncbiRefSeq -g <gene list> -o <output folder>`
 
 **options**
-<<<<<<< HEAD
 `-l yes`  Extract the longest transcript for all genes. In case you want to exclude the intron. (Genes can also have overlapping exons of different lengths.)
-=======
 `-l yes`  Extract the longest transcript for all genes; use in case you want to exclude the introns. (Genes can have overlapping exons of different lengths, and this can be problematic when calculating coverage.)
->>>>>>> f13a90bdd088ec5ed943d01aede9d576786add8e
 
 KK usually wants all the information they can get, allowing you to run the command without the `-l`flag.
 
