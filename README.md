@@ -92,7 +92,8 @@ In the `insilico_config.json` file each panel requires a specification of the pa
 2 - Gene\_Transcript\_Exon
 
 
-
+## validate\_wrapper.sh overview
+![](insilico_coverage.img)
 
 
 
