@@ -6,12 +6,10 @@ You can use the files in this repo to
 * do a coverage analysis using mpileup on a collection of validation samples from the novaseq and receive a bunch of output files with various coverage stats.
 
 
-### create\_bedfile
-
+### Create a bedfile
 
 To create a bed file you will need a list of reference sequences (`refseq_20190301_ncbiRefSeq`) and either a list of genes or transcripts. You can create a txt file with your list in `insilico_panels/KG/[new cool panel]/[new cool panelname].txt` and use that. 
 Typically KK uses gene lists and KG uses transcript lists. Here is how to use `create_bed.py` in the two cases:
-
 
 ##### Using a list of transcripts
 
@@ -26,10 +24,13 @@ The following command will provide introns too.
 `./create_bed.py -r refseq_20190301_ncbiRefSeq -g <gene list> -o <output folder>`
 
 **options**
+<<<<<<< HEAD
 `-l yes`  Extract the longest transcript for all genes. In case you want to exclude the intron. (Genes can also have overlapping exons of different lengths.)
+=======
+`-l yes`  Extract the longest transcript for all genes; use in case you want to exclude the introns. (Genes can have overlapping exons of different lengths, and this can be problematic when calculating coverage.)
+>>>>>>> f13a90bdd088ec5ed943d01aede9d576786add8e
 
 KK usually wants all the information they can get, allowing you to run the command without the `-l`flag.
-
 
 ##### The genes/transcripts can’t be found
 Sometimes genes or transcripts can not be found in `refseq_20190301_ncbiRefSeq`. It could be that the transcript has been updated since 2019-03-01 or that the gene name has been changed. If an element of the input list was not found, the script will output a file named notfound.txt. Should the gene/transcript not be present in `refseq_20190301_ncbiRefSeq`there are a few things you can try to solve it:
@@ -40,45 +41,71 @@ Try deleting the version part of the transcript name in case there is another ve
 **Genes names**
 Check if the gene has another name (e.g. by using [GeneCards database](https://www.genecards.org) ) that might be present in `refseq_20190301_ncbiRefSeq`. To replace a name use the script `replace_names.sh <old name> <new name>`. The changes will be saved in `changes_made`.  
 
-
 ### insilico\_panels
 
 The in silico panels used in wopr are also stored here. Every panel folder contains a gene or transcript list as well as a bed file created by create\_bed.py. The lists and bed files of the panels currently used by wopr should also be in `WOPR/references/insilico_panels/`. 
 
+### Coverage analysis (for in silico panel verification into WGS analysis)
 
-### validate\_wrapper
-*coverage analysis (for in silico panel verification into WGS analysis)*
+n order to create a coverage analysis you will need a bed file for the panel in question.
 
-you need to be root to run
-
-cd to validate_wrapper subdirectory
-
+#### How to run
+```
+# run as root
+cd validate_wrapper/
 ./validate_wrapper /path/to/bedfile.bed [departmentID = KG/KK,PAT] [annotationlevel = 1/2/3/4/5]
 
-results are saved here:
+# example:
+./validate_wrapper.sh /path/to/insilico_wgs/insilico_panels/KK/rubbningar_i_kopparmetabolism.v1.0/rubbningar_i_kopparmetabolism.v1.0.bed KK 1
+```
+#### Result directory
+```
 /medstore/Development/WGS_validation/in_silico_panels/${department}/validate/panels/
+```
 
-Now you need to extract various stats and add to an excelfile to be sent to responsible clinician for the insilico coverage verification (its a bit silly, it always works, and we should probably take up the fight on this at some point to save time for ourselves)
+### How to get the panel validated
+Some of the results from the coverage analysis are to be sent to the responsible clinician as an excel file. There is a template excel that you should fill in as described below. If you want to see how it looks, there are 
 
-A template excelfile exits in boxsync:
-/Dokument/WGS/konstitutionell/insilico
+**Template excel:** boxsync - /Dokument/WGS/konstitutionell/insilico
 
-Sheet1: 
-Paste results from /general_stats/panelname.bed_stats.tsv
+**Paste results to excel file**
+Sheet1 - `/general_stats/panelname.bed_stats.tsv`
 
-Sheet 2 and 3:
-Paste from /anybelow/panelname.bed_10x.csv
-Paste from /anybelow/panelname.bed_20x.csv
+Sheet2 and 3 - `/anybelow/panelname.bed_10x.csv` and `/anybelow/panelname.bed_20x.csv`
 
-SOME ADVICE: copy the results to /seqstore/webfolders/admin/insilico_results/ and navigate in the webbrowser to download the results
-Then copy pate directly from there to column 1 in the excel sheet and in excel click on "Data" menu and choose "Text to columns" using "," as delimeter. 
+To format the data in excel, mark the column, click "Data" then "Text to columns" and choose "," as delimiter. Et voilà!
 
-Finally give the name some cool name, the name of the insilicopanel is a very cool name and also makes sense and then sent to the clinician! They will do amazing things with it. 
+### Before placing the panel in routine analysis
+A panel has to be approved by the responsible clinician before it can be used in routine analysis.In order to create a coverage analysis you will need a bed file for the panel in question.
 
-### NOTE Before doing the below step wait for notification from your clinical contact 
+#### How to run
+```
+# run as root
+cd validate_wrapper/
+./validate_wrapper /path/to/bedfile.bed [departmentID = KG/KK,PAT] [annotationlevel = 1/2/3/4/5]
 
-Before doing the below step which would apply the panel for use in clinical routine analysis you need to wait for confirmation from the clinician that the panel has been approved. They will notify you. You don't have to wait until the official "start-date" (införande) but can add it to routine before AS LONG AS IT HAS BEEN APPROVED. 
+# example:
+./validate_wrapper.sh /path/to/insilico_wgs/insilico_panels/KK/rubbningar_i_kopparmetabolism.v1.0/rubbningar_i_kopparmetabolism.v1.0.bed KK 1
+```
+#### Result directory
+```
+/medstore/Development/WGS_validation/in_silico_panels/${department}/validate/panels/
+```
 
+### How to get the panel validated
+Some of the results from the coverage analysis are to be sent to the responsible clinician as an excel file. There is a template excel that you should fill in as described below. If you want to see how it looks, there are 
+
+**Template excel:** boxsync - /Dokument/WGS/konstitutionell/insilico
+
+**Paste results to excel file**
+Sheet1 - `/general_stats/panelname.bed_stats.tsv`
+
+Sheet2 and 3 - `/anybelow/panelname.bed_10x.csv` and `/anybelow/panelname.bed_20x.csv`
+
+To format the data in excel, mark the column, click "Data" then "Text to columns" and choose "," as delimiter. Et voilà!
+
+### Before placing the panel in routine analysis
+A panel has to be approved by the responsible clinician before it can be used in routine analysis.
 
 ### Place in silico panel into routine analysis
 
