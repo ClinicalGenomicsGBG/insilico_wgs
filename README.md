@@ -56,6 +56,8 @@ cd validate_wrapper/
 # example:
 ./validate_wrapper.sh /path/to/insilico_wgs/insilico_panels/KK/rubbningar_i_kopparmetabolism.v1.0/rubbningar_i_kopparmetabolism.v1.0.bed KK 1
 ```
+Find out what `annotationlevel` means under [Place in silico panel into routine analysis](#Place-in-silico-panel-into-routine-analysis)
+
 ### Result directory
 ```
 /medstore/Development/WGS_validation/in_silico_panels/${department}/validate/panels/
