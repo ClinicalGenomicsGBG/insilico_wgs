@@ -7,7 +7,7 @@ You can use the files in this repo to :
 
 ## Create a bedfile
 
-To create a bed file you will need a list of reference sequences (`refseq_20190301_ncbiRefSeq`) and either a list of genes or transcripts. You can create a txt file with your list in `insilico_panels/KG/[new cool panel]/[new cool panelname].txt` and use that. 
+To create a bed file you will need a list of reference sequences (`refseq_20190301_ncbiRefSeq`) and either a list of genes or transcripts. You can create a .txt file with your list in `insilico_panels/KG/[new cool panel]/[new cool panelname].txt` and use that. 
 Typically KK uses gene lists and KG uses transcript lists. Here is how to use `create_bed.py` in the two cases:
 
 ### Using a list of transcripts
