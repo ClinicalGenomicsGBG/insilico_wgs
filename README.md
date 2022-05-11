@@ -13,13 +13,15 @@ Typically KK uses gene lists and KG uses transcript lists. Here is how to use `c
 ### Using a list of transcripts
 
 The following command will provide exonic as well as UTR regions:
+
 `./create_bed.py -r refseq_20190301_ncbiRefSeq -t <transcript list> -o <output folder>`
 
 **options**
 `-e 2`  Adds two bases, to make sure splice sites are included as well. This is usually something that KG wants.
 
 ### Using a list of genes
-The following command will provide introns too.
+The following command will provide introns too:
+
 `./create_bed.py -r refseq_20190301_ncbiRefSeq -g <gene list> -o <output folder>`
 
 **options**
