@@ -3,11 +3,11 @@
 You can use the files in this repo to :
 
 * create bed files from a refseq-database 
-* do a coverage analysis using mpileup on a collection of validation samples from the novaseq and receive a bunch of output files with various coverage stats.
+* do a coverage analysis using mpileup on a collection of validation samples sequenced on Illumina NovaSeq and receive a bunch of output files with various coverage stats
 
 ## Create a bedfile
 
-To create a bed file you will need a list of reference sequences (`refseq_20190301_ncbiRefSeq`) and either a list of genes or transcripts. You can create a .txt file with your list in `insilico_panels/KG/[new cool panel]/[new cool panelname].txt` and use that. 
+To create a bed file you will need a list of reference sequences (`refseq_20190301_ncbiRefSeq`) and a list of either genes or transcripts. You can create a .txt file with your list in `insilico_panels/KG/[new cool panel]/[new cool panelname].txt` and use that. 
 Typically KK uses gene lists and KG uses transcript lists. Here is how to use `create_bed.py` in the two cases:
 
 ### Using a list of transcripts
