@@ -3,23 +3,25 @@
 You can use the files in this repo to :
 
 * create bed files from a refseq-database 
-* do a coverage analysis using mpileup on a collection of validation samples from the novaseq and receive a bunch of output files with various coverage stats.
+* do a coverage analysis using mpileup on a collection of validation samples sequenced on Illumina NovaSeq and receive a bunch of output files with various coverage stats
 
 ## Create a bedfile
 
-To create a bed file you will need a list of reference sequences (`refseq_20190301_ncbiRefSeq`) and either a list of genes or transcripts. You can create a .txt file with your list in `insilico_panels/KG/[new cool panel]/[new cool panelname].txt` and use that. 
+To create a bed file you will need a list of reference sequences (`refseq_20190301_ncbiRefSeq`) and a list of either genes or transcripts. You can create a .txt file with your list in `insilico_panels/KG/[new cool panel]/[new cool panelname].txt` and use that. 
 Typically KK uses gene lists and KG uses transcript lists. Here is how to use `create_bed.py` in the two cases:
 
 ### Using a list of transcripts
 
 The following command will provide exonic as well as UTR regions:
+
 `./create_bed.py -r refseq_20190301_ncbiRefSeq -t <transcript list> -o <output folder>`
 
 **options**
 `-e 2`  Adds two bases, to make sure splice sites are included as well. This is usually something that KG wants.
 
 ### Using a list of genes
-The following command will provide introns too.
+The following command will provide introns too:
+
 `./create_bed.py -r refseq_20190301_ncbiRefSeq -g <gene list> -o <output folder>`
 
 **options**
@@ -28,14 +30,14 @@ The following command will provide introns too.
 
 KK usually wants all the information they can get, allowing you to run the command without the `-l`flag.
 
-### The genes/transcripts can’t be found
-Sometimes genes or transcripts can not be found in `refseq_20190301_ncbiRefSeq`. It could be that the transcript has been updated since 2019-03-01 or that the gene name has been changed. If an element of the input list was not found, the script will output a file named notfound.txt. Should the gene/transcript not be present in `refseq_20190301_ncbiRefSeq`there are a few things you can try to solve it:
+### The genes/transcripts cannot be found
+Sometimes genes or transcripts cannot be found in `refseq_20190301_ncbiRefSeq`. It could be that the transcript has been updated since 2019-03-01 or that the gene name has been changed. If an element of the input list was not found, the script will output a file named notfound.txt. Should the gene/transcript not be present in `refseq_20190301_ncbiRefSeq`there are a few things you can try to solve it:
 
 **Transcripts**
 Try deleting the version part of the transcript name in case there is another version present. If there is, check with the person requesting the panel update if it is okay to use the other version.
 
 **Genes names**
-Check if the gene has another name (e.g. by using [GeneCards database](https://www.genecards.org) ) that might be present in `refseq_20190301_ncbiRefSeq`. To replace a name use the script `replace_names.sh <old name> <new name>`. The changes will be saved in `changes_made`.  
+Check if the gene has another name (e.g. by using [GeneCards database](https://www.genecards.org)) that might be present in `refseq_20190301_ncbiRefSeq`. To replace a name use the script `replace_names.sh <old name> <new name>`. The changes will be saved in `changes_made`.  
 <br />
 
 ## The insilico\_panels folder
@@ -95,7 +97,7 @@ In the `insilico_config.json` file each panel requires a specification of the pa
 
 
 ## validate\_wrapper.sh overview
-![](insilico_coverage.img)
+![](validate_wrapper_overview.jpg)
 
 
 
