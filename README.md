@@ -66,7 +66,7 @@ Read more about what annotation levels there are below.
 ## How to get the panel validated
 Some of the results from the coverage analysis are to be sent to the responsible clinician as an excel file so they can approve it. There is a template excel that you should fill in as described below.
 
-**Template excel:** boxsync - /Dokument/WGS/konstitutionell/insilico
+**Template excel:** Can be found in the Clinical Genomics sharepoint space at [/Dokument/insilico_wgs/template_coverage_analysis.xlsx](https://gunet.sharepoint.com/:x:/s/sy-grp-cgg/EfflqHrzqllKsml24AZQmBkB0-aVjsnp8L-3pde8gzXhYw?e=l7MpUK)
 
 **Paste results to excel file**
 
