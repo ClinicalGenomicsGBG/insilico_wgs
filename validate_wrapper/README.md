@@ -4,7 +4,7 @@ The validation samples are found here:`/medstore/Development/WGS_validation/cove
 There is more information about them in [this excel file](https://docs.google.com/spreadsheets/d/1wQTv7Ibg9BBmubxteYn7m0YZF-q7kbgV9S1Xug4_-LM/edit#gid=1456364827).
 
 ### Where to find the fasterq files on the HCP
-The samples are also backed up on the HCP and has the following paths:
+The samples are also backed up on the HCP and have the following paths:
 
 
 **CoriellFX -** `190329_A00687_0019_AHJ2JTDMXX/CoriellFX_S9_L001_R1/2_001.fasterq`
