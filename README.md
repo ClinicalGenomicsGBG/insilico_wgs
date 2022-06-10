@@ -36,7 +36,7 @@ Sometimes genes or transcripts cannot be found in `refseq_20190301_ncbiRefSeq`. 
 Try deleting the version part of the transcript name in case there is another version present. If there is, check with the person requesting the panel update if it is okay to use the other version.
 
 **Genes**
-Check if the gene has another name (e.g. by using [GeneCards database](https://www.genecards.org)) that might be present in `refseq_20190301_ncbiRefSeq`. To replace a name use the script `replace_names.sh <old name> <new name>`. The changes will be saved in `changes_made`.  
+Check if the gene has another name (e.g. by using [GeneCards database](https://www.genecards.org)) that might be present in `refseq_20190301_ncbiRefSeq`. To replace a name use the script `replace_names.sh <old name> <new name>`. The changes will be saved in `changes_made`. It could of course also be that the genes are misspelled.
 <br />
 
 ## The insilico\_panels folder
