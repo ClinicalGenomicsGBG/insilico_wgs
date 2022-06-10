@@ -7,5 +7,5 @@ Created 2022-02-03 by Emma Andersson. This panel contains part of the genes in â
 
 3. PDH-komplex\_brist.v1.0
 
-4. lipid.v1.0
+4. hypertriglyceridemi.v1.0
 

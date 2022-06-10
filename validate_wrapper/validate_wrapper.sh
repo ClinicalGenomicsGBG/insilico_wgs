@@ -18,6 +18,9 @@ then
 elif [ "$DEPARTMENT" == "KK" ];
 then
     department=$(echo "klinisk_kemi")
+elif [ "$DEPARTMENT" == "PAT" ];
+then
+    department=$(echo "patologi")
 else
     echo "invalid department, exiting"
     exit
