@@ -7,7 +7,7 @@ You can use the files in this repo to :
 
 ## Create a bedfile 
 
-Resources provided for this task can be found in the `create_bedfile` folder. It contains some scripts and a list of reference sequences (`refseq_20190301_ncbiRefSeq`). Additionally, you will need  and a list of either genes or transcripts provided from the hospital geneticists requesting new insilico panels. Create your list and save it as e.g. `insilico_panels/KG/[new cool panel]/[new cool panelname].txt`. This list should then be used as input for `create_bedfile/create_bed.py`. Typically KK uses gene lists and KG uses transcript lists.
+Resources provided for this task can be found in the `create_bedfile` folder. It contains some scripts and a list of reference sequences (`refseq_20190301_ncbiRefSeq`). Additionally, you will need a list of either genes or transcripts provided from the hospital geneticists requesting new insilico panels. Create your list and save it as e.g. `insilico_panels/KG/[new cool panel]/[new cool panelname].txt`. This list should then be used as input for `create_bedfile/create_bed.py`. Typically KK uses gene lists and KG uses transcript lists.
 
 Here is how to use `create_bed.py` in the two cases:
 
@@ -27,6 +27,7 @@ The following command will provide introns too:
 
 **options**
 `-l yes`  Extract the longest transcript for all genes; use in case you want to exclude the introns. (Genes can have overlapping exons of different lengths, and this can be problematic when calculating coverage). KK usually wants all the information they can get, allowing you to run the command without the `-l`flag.
+`-e 2` See explanation above.
 
 ### The genes/transcripts cannot be found
 Sometimes genes or transcripts cannot be found in `refseq_20190301_ncbiRefSeq`. It could be that the transcript has been updated since 2019-03-01 or that the gene name has been changed. If an element of the input list was not found, the script will output a file named notfound.txt. Should the gene/transcript not be present in `refseq_20190301_ncbiRefSeq`there are a few things you can try to solve it:
