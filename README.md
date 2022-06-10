@@ -41,7 +41,7 @@ Check if the gene has another name (e.g. by using [GeneCards database](https://w
 
 ## The insilico\_panels folder
 
-The in silico panels used in WOPR are also stored in this repository. You can find them in the `insilico_panels` folder. Every panel folder contains a gene or transcript list as well as a bed file created by `create_bed.py`. The lists and bed files of the panels currently used by wopr should also be in the WOPR repo:  `WOPR/references/insilico_panels/`. 
+The in silico panels used in WOPR are stored in this repository as well as in `WOPR/references/insilico_panels/`. Here, you can find them in the `insilico_panels` folder. Every panel folder contains a gene or transcript list as well as a bed file created by `create_bed.py`. Should you create new ones for use in WOPR routine analysis, make sure to add those lists and bed files to the WOPR repo. 
 <br />
 
 ## Coverage analysis (for in silico panel verification into WGS analysis)
