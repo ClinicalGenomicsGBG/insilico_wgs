@@ -94,7 +94,7 @@ In the `insilico_config.json` file each panel requires a specification of the pa
 
 **2** - Gene\_Transcript\_Exon
 
-Ad there are some additional options available as well:
+And there are some additional options available as well:
 
 **3** - Gene\_Exon
 
