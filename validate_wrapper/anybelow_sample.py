@@ -27,6 +27,8 @@ def merge_adjacent(indata):
     for h, i in enumerate(indata):
         try:        
             if int(i["pos"]) == lastpos + 1:
+                if len(currentregion) == 0: # Add first row of region too
+                    currentregion.append(lastrow)
                 currentregion.append(i)
             elif (int(i["pos"]) + 1 < int(indata[h + 1]["pos"]) or not (i["chr"] == indata[h + 1]["chr"])):
                 i["start"] = i["pos"]
@@ -41,6 +43,8 @@ def merge_adjacent(indata):
             i["stop"] = i["start"]
             mergedfile.append(i)
         lastpos = int(i["pos"])
+        lastrow = i
+    mergedfile.append(collapser(currentregion)) # add last currentregion to mergedfile if this is last row of indata
     print("FINAL PRINT")
     for thing in mergedfile:
         print(thing)
