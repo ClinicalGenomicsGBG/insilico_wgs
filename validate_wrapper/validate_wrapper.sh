@@ -44,14 +44,15 @@ mpileup()
 {
 create_dir "$OUTPUT"
 create_dir "$OUTPUT/mpileup"
+create_dir "$OUTPUT/mpileup/mpileup_results"
 
 for bamfile in $(find $BAMFILES -name "*bam" | grep -v "males" | grep -v "females");
 do
     if [ "$(find /medstore/Development/WGS_validation/coverage_analysis/PCRfree_bamlinks -name "*bam" | grep -v "females" | grep -v "males" | tail -n 1)" = "${bamfile}" ];
     then
-        qsub -sync y samtools_mpileup.sh $bamfile $BEDFILE $OUTPUT/mpileup
+        qsub -sync y samtools_mpileup.sh $bamfile $BEDFILE $OUTPUT/mpileup/mpileup_results
     else
-        qsub samtools_mpileup.sh $bamfile $BEDFILE $OUTPUT/mpileup
+        qsub samtools_mpileup.sh $bamfile $BEDFILE $OUTPUT/mpileup/mpileup_results
     fi
 done
 
@@ -61,7 +62,7 @@ sleep 50m
 annotate()
 {
 create_dir "$OUTPUT/mpileup/annotated"
-for mpileup in $(find $OUTPUT -name "*.tsv");
+for mpileup in $(find $OUTPUT/mpileup/mpileup_results -name "*.tsv");
 do
     ./insilico_annotate_mpileup.py -c $mpileup -b $BEDFILE -l $LEVEL -o $OUTPUT/mpileup/annotated/$(basename $mpileup | cut -d"." -f1)_annotated.tsv
 done
@@ -70,7 +71,7 @@ done
 getstats()
 {
 create_dir "$OUTPUT/general_stats"
-for mpileup in $(find $OUTPUT -name "*.tsv" | grep -v "annotated");
+for mpileup in $(find $OUTPUT/mpileup/mpileup_results -name "*.tsv" | grep -v "annotated");
 do
     stats=$(./insilico_stats.py -c $mpileup -t 1,5,10,20)
     header=$(echo "$stats" | sed "1q;d")
