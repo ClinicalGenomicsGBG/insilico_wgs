@@ -44,7 +44,8 @@ def merge_adjacent(indata):
             mergedfile.append(i)
         lastpos = int(i["pos"])
         lastrow = i
-    mergedfile.append(collapser(currentregion)) # add last currentregion to mergedfile if this is last row of indata
+    if len(currentregion) > 0:
+        mergedfile.append(collapser(currentregion)) # add last currentregion to mergedfile if this is last row of indata
     print("FINAL PRINT")
     for thing in mergedfile:
         print(thing)
