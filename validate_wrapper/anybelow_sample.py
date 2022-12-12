@@ -12,7 +12,7 @@ def read_input(infile, limit):
         fieldnames = ["chr", "pos", "cov", "gene", "transcript", "exon"]
         reader = csv.DictReader(inp, delimiter=",", fieldnames=fieldnames)
         for i in reader:
-            if int(i["cov"]) >= limit:
+            if int(float(i["cov"])) >= limit:
                 continue
             else:
                 below_limit.append(i)
