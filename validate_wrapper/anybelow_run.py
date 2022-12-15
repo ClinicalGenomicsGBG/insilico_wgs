@@ -47,6 +47,12 @@ def merge_low_regions(low_regions):
             merges = 0
             prevstart = start
             prevstop = stop
+            # Add the last region too
+            if len(sorted_low_regions) == iterator:
+                region_dict["start"] = start
+                region_dict["stop"] = stop
+                region_dict["merges"] = merges
+                exon_regions.append(region_dict.copy())                       
     return exon_regions    
 
 def low_covered_regions(csvlist, output):
