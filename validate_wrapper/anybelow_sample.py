@@ -6,6 +6,7 @@ import logging
 
 # Takes input file and returns a csv dicreader object containing only the positions below coverage limit
 def read_input(infile, limit):
+    print(f'{infile}')
     limit = int(limit)
     below_limit = []
     with open(infile, "r") as inp:
