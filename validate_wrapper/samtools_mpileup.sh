@@ -2,7 +2,7 @@
 #$ -cwd
 #$ -S /bin/bash
 #$ -pe mpi 1
-#$ -q wgs.q
+#$ -q routine.q
 #$ -l excl=1
 #$ -o stdoutserrs/
 #$ -e stdoutserrs/
