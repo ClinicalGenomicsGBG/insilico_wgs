@@ -16,7 +16,10 @@ def count_bases_in_threshold(coverage_list, threshold):
     return percent_covered
 
 def calculate_mean(coverage_list):
-    mean_calc = sum(coverage_list) / len(coverage_list) 
+    if len(coverage_list) > 0:
+        mean_calc = sum(coverage_list) / len(coverage_list)
+    else:
+        mean_calc = 0
     mean = float("{0:.3f}".format(mean_calc))
     return mean
 
